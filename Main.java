@@ -10,19 +10,18 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         // Size of each section
-        int cutoff = (UPPER_BOUND + NUM_THREADS - 1) / NUM_THREADS, j, sum = j = 0;
-				primes[0] = primes[1] = true;
-
         Thread[] t = new Thread[NUM_THREADS];
+        int cutoff = (UPPER_BOUND + NUM_THREADS - 1) / NUM_THREADS, j = 0;
 
 				// time elapsed start
-        long time = System.currentTimeMillis();
+        long sum = 0, time = System.currentTimeMillis();
 
         // Start each thread
         for (int i = 0; i < NUM_THREADS; i++) {
             t[i] = new Thread(new PrimeRun(cutoff * i, cutoff * (i + 1)));
             t[i].start();
         } for (int i = 0; i < NUM_THREADS; i++) t[i].join();
+				primes[0] = primes[1] = false;
 
 				// time elapsed end
         time = System.currentTimeMillis() - time;
@@ -32,7 +31,7 @@ public class Main {
 
 				// Go over found primes
         for (int i = UPPER_BOUND - 2; i >= 3; i -= 2) {
-            if (primes[i]) {
+            if (!primes[i]) {
                 sum += i;
 								
 								// add to top primes
@@ -65,9 +64,9 @@ public class Main {
 
             for (int i = 3; i < SQRT_MAX; i += 2, tmp=i*i) {
                 // Ensure starting point in bound
-								tmp = (int) Math.ceil(1.0 * lo / i) * i;
+								if (tmp < lo) tmp = (int) Math.ceil(1.0 * lo / i) * i;
 
-                // set primes in range to true
+                // flag non-primes
                 for (int j = tmp; j < hi; j += i) primes[j] = true;
             }
         }
