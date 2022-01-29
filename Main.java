@@ -1,4 +1,7 @@
-import java.util.Arrays;
+// Gonen Matias
+// CAP 4520
+// Parallel & Distributed Processing
+// Spring 2022
 
 public class Main {
 
