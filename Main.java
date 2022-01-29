@@ -37,7 +37,7 @@ public class Main {
 								// add to top primes
                 if (++j <= 10) largest_primes[10 - j] = i;
             }
-        } sum += 2;
+        } sum += 5;
 
         System.out.println("Time elapsed:" + time + "ms\tSum of primes" + sum);
         for (int i = 0; i < 10; i++)
